@@ -29,3 +29,10 @@ yarn-error.log*
 
 # coverage
 coverage/
+
+# outils agents IA (skills/hooks locaux, pas du code du site)
+.claude/
+.agents/
+.codex/
+.impeccable/
+skills-lock.json

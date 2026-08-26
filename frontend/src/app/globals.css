@@ -1,26 +1,114 @@
 @import "tailwindcss";
 
+/*
+  Poulcook — monde "quai de gare" (voir le commentaire de direction dans layout.tsx).
+  Palette verrouillée par la charte existante (teal + corail + or) + les neutres
+  de quai (panneau quasi-noir, papier billet) qui portent le reste du système.
+*/
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-board: #0d1012;
+  --color-board-raised: #16191c;
+  --color-board-line: #272c30;
+
+  --color-teal: #00697f;
+  --color-teal-strong: #1e93ac;
+  --color-coral: #e94f36;
+  --color-coral-strong: #ff7a5c;
+  --color-gold: #db9423;
+
+  --color-cream: #f2eee6;
+  --color-cream-dim: #a7a49b;
+  --color-paper: #f0ede4;
+  --color-ink: #1d1d23;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-board: var(--color-board);
+  --color-board-raised: var(--color-board-raised);
+  --color-board-line: var(--color-board-line);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-teal: var(--color-teal);
+  --color-teal-strong: var(--color-teal-strong);
+  --color-coral: var(--color-coral);
+  --color-coral-strong: var(--color-coral-strong);
+  --color-gold: var(--color-gold);
+
+  --color-cream: var(--color-cream);
+  --color-cream-dim: var(--color-cream-dim);
+  --color-paper: var(--color-paper);
+  --color-ink: var(--color-ink);
+
+  --font-display: var(--font-archivo);
+  --font-body: var(--font-archivo);
+  --font-mono: var(--font-space-mono);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-board);
+  color: var(--color-cream);
+  font-family: var(--font-body);
+}
+
+/* Grain fixe et discret pour casser la platitude numérique du panneau sombre. */
+.board-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.font-expanded {
+  font-variation-settings: "wdth" 125;
+}
+
+.font-condensed {
+  font-variation-settings: "wdth" 80;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
