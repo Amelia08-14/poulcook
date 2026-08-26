@@ -1,0 +1,31 @@
+# dependencies
+node_modules/
+/.pnp
+.pnp.*
+
+# frontend (Next.js)
+frontend/.next/
+frontend/out/
+frontend/build/
+frontend/next-env.d.ts
+frontend/*.tsbuildinfo
+frontend/.vercel
+
+# backend (Express/Prisma)
+backend/dist/
+backend/src/generated/prisma/
+
+# env files
+.env
+.env*.local
+
+# misc
+.DS_Store
+*.pem
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# coverage
+coverage/
