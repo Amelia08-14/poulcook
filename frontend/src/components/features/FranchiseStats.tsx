@@ -1,21 +1,18 @@
-import SplitFlap from "@/components/ui/SplitFlap";
+import CountUp from "@/components/ui/CountUp";
 import { FRANCHISE_STATS } from "@/data/content";
 
 export default function FranchiseStats() {
   return (
-    <div className="grid grid-cols-1 gap-px overflow-hidden rounded-sm border border-board-line bg-board-line sm:grid-cols-3">
-      {FRANCHISE_STATS.map((stat, index) => (
-        <div key={stat.label} className="bg-board-raised px-6 py-8 text-center">
-          <SplitFlap
-            as="div"
-            value={`${stat.value}${stat.suffix}`}
-            startDelay={index * 150}
-            className="justify-center font-mono text-4xl font-bold text-coral sm:text-5xl"
-            cellClassName="w-[0.68em]"
-          />
-          <p className="mt-3 font-mono text-xs uppercase tracking-[0.2em] text-cream-dim">{stat.label}</p>
+    <dl className="grid grid-cols-1 gap-10 sm:grid-cols-3">
+      {FRANCHISE_STATS.map((stat) => (
+        <div key={stat.label}>
+          <dt className="text-sm font-medium text-cream-dim">{stat.label}</dt>
+          <dd className="mt-2 font-wide text-5xl font-extrabold tracking-tight text-coral-strong tabular-nums sm:text-6xl">
+            <CountUp value={stat.value} />
+            <span className="text-3xl sm:text-4xl">{stat.suffix}</span>
+          </dd>
         </div>
       ))}
-    </div>
+    </dl>
   );
 }

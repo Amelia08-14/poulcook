@@ -1,31 +1,46 @@
 @import "tailwindcss";
 
 /*
-  Poulcook — monde "quai de gare" (voir le commentaire de direction dans layout.tsx).
-  Palette verrouillée par la charte existante (teal + corail + or) + les neutres
-  de quai (panneau quasi-noir, papier billet) qui portent le reste du système.
+  Poulcook — monde "produit vedette" (voir le commentaire de direction dans layout.tsx).
+  Fond clair et encre sombre extraits tel quels du site live (cf. PRODUCT.md, Brand
+  Commitments) ; corail/teal/or sont la charte existante, inchangée. La nuit n'est
+  jamais le fond par défaut — elle rythme certaines bandes (hero, preuve sociale,
+  franchise, footer) pour varier la densité du défilement.
 */
 :root {
-  --color-board: #0d1012;
-  --color-board-raised: #16191c;
-  --color-board-line: #272c30;
+  --color-paper: #f2f2f2;
+  --color-paper-raised: #e8e7e2;
+  --color-paper-line: #d8d6cf;
+
+  --color-ink: #1d1d23;
+  --color-ink-dim: #5c5a60;
+
+  --color-night: #141318;
+  --color-night-raised: #201e25;
+
+  --color-cream: #f2eee6;
+  --color-cream-dim: #a7a49b;
 
   --color-teal: #00697f;
   --color-teal-strong: #1e93ac;
   --color-coral: #e94f36;
   --color-coral-strong: #ff7a5c;
   --color-gold: #db9423;
-
-  --color-cream: #f2eee6;
-  --color-cream-dim: #a7a49b;
-  --color-paper: #f0ede4;
-  --color-ink: #1d1d23;
 }
 
 @theme inline {
-  --color-board: var(--color-board);
-  --color-board-raised: var(--color-board-raised);
-  --color-board-line: var(--color-board-line);
+  --color-paper: var(--color-paper);
+  --color-paper-raised: var(--color-paper-raised);
+  --color-paper-line: var(--color-paper-line);
+
+  --color-ink: var(--color-ink);
+  --color-ink-dim: var(--color-ink-dim);
+
+  --color-night: var(--color-night);
+  --color-night-raised: var(--color-night-raised);
+
+  --color-cream: var(--color-cream);
+  --color-cream-dim: var(--color-cream-dim);
 
   --color-teal: var(--color-teal);
   --color-teal-strong: var(--color-teal-strong);
@@ -33,60 +48,105 @@
   --color-coral-strong: var(--color-coral-strong);
   --color-gold: var(--color-gold);
 
-  --color-cream: var(--color-cream);
-  --color-cream-dim: var(--color-cream-dim);
-  --color-paper: var(--color-paper);
-  --color-ink: var(--color-ink);
-
-  --font-display: var(--font-archivo);
+  --font-display: var(--font-carter-one);
   --font-body: var(--font-archivo);
-  --font-mono: var(--font-space-mono);
 }
 
 body {
-  background: var(--color-board);
-  color: var(--color-cream);
+  background: var(--color-paper);
+  color: var(--color-ink);
   font-family: var(--font-body);
 }
 
-/* Grain fixe et discret pour casser la platitude numérique du panneau sombre. */
-.board-grain {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0.05;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+::selection {
+  background: var(--color-coral);
+  color: var(--color-cream);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-coral);
+  outline-offset: 3px;
+}
+
+html {
+  scrollbar-color: var(--color-paper-line) var(--color-paper);
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-paper);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-paper-line);
+  border-radius: 999px;
+  border: 3px solid var(--color-paper);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-ink-dim);
 }
 
 .tabular-nums {
   font-variant-numeric: tabular-nums;
 }
 
-.font-expanded {
-  font-variation-settings: "wdth" 125;
+/* Axe de largeur d'Archivo (variable font), poussé uniquement sur les très
+   grands titres — jamais une "police Expanded" statique séparée. */
+.font-wide {
+  font-variation-settings: "wdth" 118;
 }
 
-.font-condensed {
-  font-variation-settings: "wdth" 80;
+/* Signature de mouvement du site : une entrée avec léger rebond au
+   défilement, déclinée en 5 directions pour que les blocs arrivent de
+   côtés différents plutôt que le même fondu répété partout. */
+.reveal {
+  opacity: 0;
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
+.reveal-up {
+  transform: translateY(56px) scale(0.96);
 }
 
-.animate-marquee {
-  animation: marquee 28s linear infinite;
+.reveal-down {
+  transform: translateY(-48px) scale(0.96);
 }
 
-.animate-marquee:hover {
-  animation-play-state: paused;
+.reveal-left {
+  transform: translate(-72px, 12px) rotate(-3deg);
+}
+
+.reveal-right {
+  transform: translate(72px, 12px) rotate(3deg);
+}
+
+.reveal-zoom {
+  transform: scale(0.82);
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translate(0, 0) scale(1) rotate(0deg);
+}
+
+/* Les photos produit se posent par un léger recul de zoom, jamais un
+   fondu seul — la photographie fait partie du geste de révélation. */
+.photo-zoom img {
+  transform: scale(1.12);
+  transition: transform 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-visible.photo-zoom img,
+.reveal-visible .photo-zoom img {
+  transform: scale(1);
 }
 
 @keyframes pulse-dot {
@@ -103,7 +163,190 @@ body {
   animation: pulse-dot 1.6s ease-in-out infinite;
 }
 
+/* Lueur de braise : dérive lentement derrière les bandes nuit pour éviter
+   l'aplat mort — littéral pour une marque de poulet "braisé", jamais un
+   glow décoratif générique. Un seul geste, réservé à 2-3 bandes par page. */
+@keyframes ember-drift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.32;
+  }
+  50% {
+    transform: translate(5%, 6%) scale(1.18);
+    opacity: 0.5;
+  }
+}
+
+.ember-glow {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(70px);
+  opacity: 0.35;
+  animation: ember-drift 16s ease-in-out infinite;
+  background: radial-gradient(closest-side, var(--color-coral) 0%, transparent 72%);
+}
+
+.ember-glow-secondary {
+  animation-delay: -8s;
+  animation-duration: 20s;
+  background: radial-gradient(closest-side, var(--color-gold) 0%, transparent 72%);
+}
+
+/* Blobs organiques : forme molle qui respire et pivote lentement — le
+   registre de fond coloré/vivant demandé par le client, décliné dans la
+   charte Poulcook (corail/teal/or) plutôt que les orange/jaune génériques
+   des références. Un seul blob = un seul dégradé, jamais empilé. */
+@keyframes blob-morph {
+  0%,
+  100% {
+    border-radius: 42% 58% 65% 35% / 45% 45% 55% 55%;
+    transform: rotate(0deg) scale(1);
+  }
+  33% {
+    border-radius: 58% 42% 40% 60% / 62% 38% 62% 38%;
+    transform: rotate(8deg) scale(1.05);
+  }
+  66% {
+    border-radius: 35% 65% 55% 45% / 40% 60% 40% 60%;
+    transform: rotate(-6deg) scale(0.98);
+  }
+}
+
+.blob {
+  position: absolute;
+  animation: blob-morph 22s ease-in-out infinite;
+}
+
+/* Anneau qui tourne en continu — le geste "circulaire" littéral autour
+   d'un badge ponctuel, jamais un ornement répété partout. */
+@keyframes ring-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ring-spin {
+  animation: ring-spin 18s linear infinite;
+}
+
+/* Badge flottant : légère lévitation, pour les preuves réelles (remise,
+   ancienneté) posées sur une photo plutôt qu'un fait noyé dans un paragraphe. */
+@keyframes badge-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.badge-float {
+  animation: badge-float 4.5s ease-in-out infinite;
+}
+
+/* Le poulet du slogan flotte doucement une fois posé — présenté comme un
+   plat qu'on vient de servir, jamais un simple élément statique. */
+@keyframes plate-drift {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(2deg);
+  }
+}
+
+.plate-drift {
+  animation: plate-drift 6s ease-in-out infinite;
+}
+
+/* Bandeau défilant (noms des accompagnements) — un second registre de
+   mouvement, continu plutôt que déclenché au scroll, pour varier le rythme. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Flamme vivante — la braise littérale demandée par le client, reprise du
+   logo (le "V" de flamme) plutôt qu'une décoration inventée. Vacille,
+   jamais un simple pulse d'opacité. */
+@keyframes flame-flicker {
+  0%,
+  100% {
+    transform: scaleY(1) scaleX(1) rotate(-1deg);
+  }
+  25% {
+    transform: scaleY(1.08) scaleX(0.95) rotate(1deg);
+  }
+  50% {
+    transform: scaleY(0.94) scaleX(1.04) rotate(-2deg);
+  }
+  75% {
+    transform: scaleY(1.05) scaleX(0.97) rotate(1.5deg);
+  }
+}
+
+.flame-flicker {
+  transform-origin: 50% 100%;
+  animation: flame-flicker 2.4s ease-in-out infinite;
+}
+
+/* Motif de logo en franchise — le rond de marque répété en fond très clair,
+   qui dérive lentement, comme le décor mural du vrai restaurant plutôt
+   qu'une texture générique. Réservé à 1 section, jamais partout. */
+@keyframes logo-pattern-drift {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(-120px, -120px);
+  }
+}
+
+.logo-pattern {
+  animation: logo-pattern-drift 40s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .photo-zoom img {
+    transform: scale(1);
+  }
+
+  .animate-marquee {
+    animation: none;
+  }
+
+  .flame-flicker,
+  .logo-pattern {
+    animation: none;
+  }
+
+  .blob,
+  .ring-spin,
+  .badge-float,
+  .plate-drift {
+    animation: none;
+  }
+
   *,
   *::before,
   *::after {

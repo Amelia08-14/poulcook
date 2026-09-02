@@ -4,8 +4,8 @@ import { useState, type FormEvent } from "react";
 import { SITE } from "@/data/content";
 
 const inputClasses =
-  "w-full rounded-sm border border-board-line bg-board px-4 py-3 text-cream placeholder:text-cream-dim/60 focus:border-teal focus:outline-none";
-const labelClasses = "font-mono text-xs uppercase tracking-[0.15em] text-cream-dim";
+  "w-full rounded-xl border border-ink/15 bg-paper px-4 py-3 text-ink placeholder:text-ink-dim/50 transition-colors focus:border-coral focus:outline-none focus:ring-2 focus:ring-coral/20";
+const labelClasses = "text-sm font-medium text-ink-dim";
 
 /**
  * Le backend (Node/Express/Prisma) n'existe pas encore : le message part par
@@ -69,12 +69,12 @@ export default function ContactForm() {
       <div className="sm:col-span-2">
         <button
           type="submit"
-          className="rounded-sm bg-coral px-8 py-3 font-display font-expanded uppercase tracking-[0.14em] text-cream transition-colors hover:bg-coral-strong"
+          className="rounded-full bg-coral px-8 py-3.5 text-base font-semibold text-cream transition-colors hover:bg-coral-strong"
         >
           Envoyer
         </button>
         {sent && (
-          <p className="mt-3 font-mono text-xs uppercase tracking-[0.1em] text-teal-strong">
+          <p className="mt-3 text-sm font-medium text-teal">
             Votre client mail s&apos;est ouvert avec votre message pré-rempli.
           </p>
         )}

@@ -4,8 +4,8 @@ import { useState, type FormEvent } from "react";
 import { HOW_HEARD_OPTIONS, SITE } from "@/data/content";
 
 const inputClasses =
-  "w-full rounded-sm border border-board-line bg-board px-4 py-3 text-cream placeholder:text-cream-dim/60 focus:border-teal focus:outline-none";
-const labelClasses = "font-mono text-xs uppercase tracking-[0.15em] text-cream-dim";
+  "w-full rounded-xl border border-ink/15 bg-paper px-4 py-3 text-ink placeholder:text-ink-dim/50 transition-colors focus:border-coral focus:outline-none focus:ring-2 focus:ring-coral/20";
+const labelClasses = "text-sm font-medium text-ink-dim";
 
 /**
  * Le backend (Node/Express/Prisma) n'existe pas encore : la candidature part par
@@ -72,7 +72,7 @@ export default function FranchiseForm() {
         <legend className={labelClasses}>Avez-vous déjà un local ? *</legend>
         <div className="flex gap-6">
           {(["oui", "non"] as const).map((option) => (
-            <label key={option} className="flex items-center gap-2 text-cream">
+            <label key={option} className="flex items-center gap-2 text-ink">
               <input
                 type="radio"
                 name="local"
@@ -80,7 +80,7 @@ export default function FranchiseForm() {
                 required
                 checked={hasLocal === option}
                 onChange={() => setHasLocal(option)}
-                className="accent-teal"
+                className="accent-coral"
               />
               {option === "oui" ? "Oui" : "Non"}
             </label>
@@ -136,12 +136,12 @@ export default function FranchiseForm() {
       <div className="sm:col-span-2">
         <button
           type="submit"
-          className="rounded-sm bg-coral px-8 py-3 font-display font-expanded uppercase tracking-[0.14em] text-cream transition-colors hover:bg-coral-strong"
+          className="rounded-full bg-coral px-8 py-3.5 text-base font-semibold text-cream transition-colors hover:bg-coral-strong"
         >
           Envoyer
         </button>
         {sent && (
-          <p className="mt-3 font-mono text-xs uppercase tracking-[0.1em] text-teal-strong">
+          <p className="mt-3 text-sm font-medium text-teal">
             Votre client mail s&apos;est ouvert avec votre candidature pré-remplie.
           </p>
         )}

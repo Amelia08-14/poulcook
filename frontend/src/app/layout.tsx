@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Archivo, Space_Mono } from "next/font/google";
+import { Archivo, Carter_One } from "next/font/google";
 import Header from "@/components/layouts/Header";
 import Footer from "@/components/layouts/Footer";
 import "./globals.css";
@@ -10,10 +10,10 @@ const archivo = Archivo({
   axes: ["wdth"],
 });
 
-const spaceMono = Space_Mono({
-  variable: "--font-space-mono",
+const carterOne = Carter_One({
+  variable: "--font-carter-one",
   subsets: ["latin"],
-  weight: ["400", "700"],
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -33,29 +33,28 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="fr" className={`${archivo.variable} ${spaceMono.variable} h-full`}>
-      <body className="min-h-full flex flex-col bg-board text-cream antialiased">
+    <html lang="fr" className={`${archivo.variable} ${carterOne.variable} h-full`}>
+      <body className="min-h-full flex flex-col bg-paper text-ink antialiased">
         {/*
-          THESIS: Poulcook refuse la grille générique des sites de livraison ; le site
-          emprunte le langage du quai de métro parisien pour vendre du poulet, le
-          mouvement fait la démonstration plutôt que l'illustration.
-          OWN-WORLD: panneaux quasi-noirs, teal #00697F et corail #E94F36 en couleurs
-          de ligne, or #DB9423 en signal, chiffres split-flap en Space Mono, gros
-          titres Archivo étiré (axe wdth) en capitales.
-          STORY: le visiteur arrive sur un "quai" qui annonce le poulet du soir, lit
-          le plan de ligne vers menu/franchise/contact, puis repart via Commander ou
-          Devenir franchisé.
-          FIRST VIEWPORT: panneau sombre plein cadre, ligne de titre en split-flap qui
-          se stabilise sur l'accroche, bandeau plan de ligne en dessous, deux tuiles
-          de départ en guise de CTA.
-          FORM: direction assignée (quai/métro parisien), seed 3e1fd2c3, index 4.
-          FINISH: unreviewed and undocumented is unfinished; this build ends with the
-          finish review, the verdict, DESIGN.md, and every shipping raster carrying
-          its provenance.
+          THESIS: Poulcook mérite d'être vendu comme un produit d'exception, pas mis
+          en scène par un gadget — refuse le monde "quai de gare" jugé générique.
+          OWN-WORLD: fond papier clair et encre sombre extraits du site réel, corail
+          en unique couleur d'action, teal en second rôle, or en accent rare ;
+          Carter One (display, jeune et rond) pour les grands titres, Archivo pour
+          le corps et les données ; photo plein cadre du produit ; blobs organiques
+          et bandes nuit rythment le défilement.
+          STORY: le visiteur affamé voit le poulet en premier, comprend l'offre en
+          une phrase, commande ou explore la franchise sans détour.
+          FIRST VIEWPORT: photo plein cadre du poulet braisé, dégradé bas pour la
+          lisibilité, accroche éditoriale en bas à gauche, deux actions claires.
+          FORM: grammaire produit-vedette façon Apple/Nike, direction fixée par le
+          client — remplace le monde "quai de gare" (rounded-sm, split-flap, mono).
+          FINISH: unreviewed and undocumented is unfinished; this build ends with
+          the finish review, the verdict, DESIGN.md, and every shipping raster
+          carrying its provenance.
         */}
-        <div className="board-grain" aria-hidden="true" />
         <Header />
-        <main className="relative z-0 flex-1">{children}</main>
+        <main className="flex-1">{children}</main>
         <Footer />
       </body>
     </html>

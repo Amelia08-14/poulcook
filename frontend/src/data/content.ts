@@ -2,10 +2,13 @@
 // Ne pas inventer de nouveaux chiffres, adresses ou témoignages : cf. PRODUCT.md.
 
 export const NAV_LINKS = [
-  { href: "/a-propos", label: "À propos", line: "teal" as const },
-  { href: "/franchise", label: "Franchise", line: "coral" as const },
-  { href: "/contact", label: "Contact", line: "gold" as const },
+  { href: "/menu", label: "Le menu" },
+  { href: "/a-propos", label: "À propos" },
+  { href: "/franchise", label: "Franchise" },
+  { href: "/contact", label: "Contact" },
 ];
+
+export const NASDAS_VIDEO_ID = "6FAP3HsDjvg";
 
 export const SITE = {
   name: "Poulcook",
@@ -30,13 +33,52 @@ export const SITE = {
 };
 
 export const SIDES = [
-  { name: "Bananes plantain", detail: "Bananes plantain frites" },
-  { name: "Frites rustiques", detail: "Délicieusement rustiques et croustillantes" },
-  { name: "Haricots verts", detail: "Haricots verts au beurre et à l'ail" },
-  { name: "Pommes de terre", detail: "Pommes de terre grenaille • Persillade au beurre" },
-  { name: "Riz Poulcook", detail: "La spécialité de la maison" },
-  { name: "Riz blanc", detail: "Riz basmati blanc au beurre" },
-  { name: "Frites de patates douces", detail: "Tellement doux" },
+  {
+    name: "Bananes plantain",
+    detail: "Bananes plantain frites",
+    image: "/images/accompagnement/bananes-fries.jpeg",
+  },
+  {
+    name: "Frites rustiques",
+    detail: "Délicieusement rustiques et croustillantes",
+    image: "/images/accompagnement/crousties.jpeg",
+  },
+  {
+    name: "Haricots verts",
+    detail: "Haricots verts au beurre et à l'ail",
+    image: "/images/accompagnement/haricots-verts.jpeg",
+  },
+  {
+    name: "Pommes de terre",
+    detail: "Pommes de terre grenaille • Persillade au beurre",
+    image: "/images/accompagnement/pomme-de-terre-grenailles.png",
+  },
+  {
+    name: "Riz Poulcook",
+    detail: "La spécialité de la maison",
+    image: "/images/accompagnement/riz-poulcook.jpeg",
+  },
+  {
+    name: "Riz blanc",
+    detail: "Riz basmati blanc au beurre",
+    image: "/images/accompagnement/riz-blanc.jpeg",
+  },
+  {
+    name: "Frites de patates douces",
+    detail: "Tellement doux 😊",
+    image: "/images/accompagnement/patates-douces.jpeg",
+  },
+];
+
+export const BONS_PLANS = [
+  {
+    title: "Poulet braisé + bananes plantain",
+    image: "/images/bon-plan-plantain.jpeg",
+  },
+  {
+    title: "Poulet braisé + haricots verts",
+    image: "/images/bon-plan-haricots-verts.jpeg",
+  },
 ];
 
 export const REVIEWS = [
