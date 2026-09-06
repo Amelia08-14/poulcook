@@ -1,11 +1,13 @@
-// Contenu repris tel quel de poulcook.com (capturé le 2026-08-26).
+// Contenu repris tel quel de poulcook.com (capturé le 2026-08-26) + adresses
+// des restaurants fournies par le client (2026-09).
 // Ne pas inventer de nouveaux chiffres, adresses ou témoignages : cf. PRODUCT.md.
 
 export const NAV_LINKS = [
-  { href: "/menu", label: "Le menu" },
-  { href: "/a-propos", label: "À propos" },
+  { href: "/", label: "Accueil" },
+  { href: "/menu", label: "La Carte" },
+  { href: "/contact", label: "Nos restaurants" },
+  { href: "/a-propos", label: "PoulCook" },
   { href: "/franchise", label: "Franchise" },
-  { href: "/contact", label: "Contact" },
 ];
 
 export const NASDAS_VIDEO_ID = "6FAP3HsDjvg";
@@ -13,13 +15,10 @@ export const NASDAS_VIDEO_ID = "6FAP3HsDjvg";
 export const SITE = {
   name: "Poulcook",
   tagline: "le poulet le plus chaud de Paname !",
-  orderUrl: "https://poulcook.dishop.co/",
   email: "contact@poulcook.com",
   phones: ["01 72 38 25 49", "01 34 19 10 18"],
   hours: "Lundi – Dimanche · 11h00 – 23h00",
   founded: 2021,
-  appStoreUrl: "https://apps.apple.com/fr/app/poulcook/id6447832203",
-  playStoreUrl: "https://play.google.com/store/search?q=poulcook&c=apps&gl=FR",
   socials: [
     { label: "Instagram", href: "https://www.instagram.com/poulcook/" },
     { label: "Snapchat", href: "https://t.snapchat.com/9RedHyPm" },
@@ -32,54 +31,83 @@ export const SITE = {
   ],
 };
 
-export const SIDES = [
+// ---------------------------------------------------------------------------
+// Nos restaurants — France, Algérie, Maroc (adresses fournies par le client).
+// Le lien Maps s'ouvre toujours dans un nouvel onglet (cf. page Contact).
+// ---------------------------------------------------------------------------
+
+export type Restaurant = {
+  city: string;
+  lines: string[];
+  maps: string;
+};
+
+export type Country = {
+  code: "fr" | "dz" | "ma";
+  name: string;
+  flag: string;
+  blurb: string;
+  restaurants: Restaurant[];
+};
+
+export const COUNTRIES: Country[] = [
   {
-    name: "Bananes plantain",
-    detail: "Bananes plantain frites",
-    image: "/images/accompagnement/bananes-fries.jpeg",
+    code: "fr",
+    name: "France",
+    flag: "🇫🇷",
+    blurb: "Là où tout a commencé, en 2021 — le poulet le plus chaud de Paname.",
+    restaurants: [
+      {
+        city: "Paris",
+        lines: ["253 Rue de Belleville", "75019 Paris"],
+        maps: "https://maps.app.goo.gl/EbeE6eDThNvCrgd36",
+      },
+      {
+        city: "Saint-Denis",
+        lines: ["41 Rue Guynemer", "93200 Saint-Denis"],
+        maps: "https://maps.app.goo.gl/8LACG5yd8asqyvUu5",
+      },
+      {
+        city: "Villiers-le-Bel",
+        lines: ["11 Av. de la Concorde", "95400 Villiers-le-Bel"],
+        maps: "https://maps.app.goo.gl/RKNxGWd6zcT19Ph9A",
+      },
+      {
+        city: "Creil",
+        lines: ["29 Rue Gambetta", "60100 Creil"],
+        maps: "https://maps.app.goo.gl/YgmWnKph1gKqcjGH8",
+      },
+    ],
   },
   {
-    name: "Frites rustiques",
-    detail: "Délicieusement rustiques et croustillantes",
-    image: "/images/accompagnement/crousties.jpeg",
+    code: "dz",
+    name: "Algérie",
+    flag: "🇩🇿",
+    blurb: "Le braisé PoulCook débarque sur les hauteurs d'Alger.",
+    restaurants: [
+      {
+        city: "Alger — El Biar",
+        lines: ["36 Rue Mohamed Chabane", "El Biar 16000"],
+        maps: "https://maps.app.goo.gl/UuytXR9KykAH9nu38",
+      },
+    ],
   },
   {
-    name: "Haricots verts",
-    detail: "Haricots verts au beurre et à l'ail",
-    image: "/images/accompagnement/haricots-verts.jpeg",
-  },
-  {
-    name: "Pommes de terre",
-    detail: "Pommes de terre grenaille • Persillade au beurre",
-    image: "/images/accompagnement/pomme-de-terre-grenailles.png",
-  },
-  {
-    name: "Riz Poulcook",
-    detail: "La spécialité de la maison",
-    image: "/images/accompagnement/riz-poulcook.jpeg",
-  },
-  {
-    name: "Riz blanc",
-    detail: "Riz basmati blanc au beurre",
-    image: "/images/accompagnement/riz-blanc.jpeg",
-  },
-  {
-    name: "Frites de patates douces",
-    detail: "Tellement doux 😊",
-    image: "/images/accompagnement/patates-douces.jpeg",
+    code: "ma",
+    name: "Maroc",
+    flag: "🇲🇦",
+    blurb: "Cap sur Casablanca, face à l'océan.",
+    restaurants: [
+      {
+        city: "Casablanca",
+        lines: ["Rue Ibnou Jahir", "Casablanca 20500"],
+        maps: "https://maps.app.goo.gl/pZ2doAWLTD9XV5CZA",
+      },
+    ],
   },
 ];
 
-export const BONS_PLANS = [
-  {
-    title: "Poulet braisé + bananes plantain",
-    image: "/images/bon-plan-plantain.jpeg",
-  },
-  {
-    title: "Poulet braisé + haricots verts",
-    image: "/images/bon-plan-haricots-verts.jpeg",
-  },
-];
+export const RESTAURANT_COUNT = COUNTRIES.reduce((n, c) => n + c.restaurants.length, 0);
 
 export const REVIEWS = [
   {
@@ -141,8 +169,8 @@ export const HISTORY = {
 };
 
 export const CONTACT_INTRO = {
-  title: "Vous avez faim ?",
-  text: "Venez expérimenter la suprême délicatesse du poulet parisien par excellence.",
+  title: "Nos restaurants",
+  text: "Poulcook, c'est aujourd'hui la France, l'Algérie et le Maroc — le même poulet braisé, du même savoir-faire, servi avec le sourire.",
 };
 
 export const HOW_HEARD_OPTIONS = [

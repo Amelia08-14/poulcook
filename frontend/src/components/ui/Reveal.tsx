@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
-type Tag = "div" | "span" | "h1" | "h2" | "p";
+type Tag = "div" | "span" | "h1" | "h2" | "h3" | "p" | "li" | "figure";
 type Direction = "up" | "down" | "left" | "right" | "zoom";
 
 /**

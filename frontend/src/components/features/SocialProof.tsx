@@ -1,17 +1,21 @@
 import Image from "next/image";
 import Reveal from "@/components/ui/Reveal";
+import AnimeText from "@/components/ui/AnimeText";
 import EmberGlow from "@/components/ui/EmberGlow";
 import YouTubeFacade from "@/components/ui/YouTubeFacade";
 import { NASDAS_VIDEO_ID } from "@/data/content";
 
 export default function SocialProof() {
   return (
-    <section className="relative overflow-hidden bg-night py-24 text-cream sm:py-28">
+    <section className="relative isolate overflow-hidden bg-night py-24 text-cream sm:py-28">
+      <div aria-hidden className="aurora opacity-30" />
       <EmberGlow />
       <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-6">
-        <Reveal as="h2" className="text-balance font-display text-3xl tracking-tight sm:text-4xl">
-          Poulcook validé par Nasdas et sa team 🔥
-        </Reveal>
+        <AnimeText
+          as="h2"
+          text="Poulcook validé par Nasdas et sa team 🔥"
+          className="text-balance font-display text-3xl tracking-tight text-cream sm:text-4xl"
+        />
 
         <Reveal direction="zoom" delay={100} className="mx-auto mt-10 aspect-video max-w-2xl overflow-hidden rounded-2xl bg-night-raised">
           <YouTubeFacade videoId={NASDAS_VIDEO_ID} title="Poulcook validé par Nasdas et sa team" />

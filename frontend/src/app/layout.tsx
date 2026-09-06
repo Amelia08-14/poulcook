@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Archivo, Carter_One } from "next/font/google";
 import Header from "@/components/layouts/Header";
 import Footer from "@/components/layouts/Footer";
+import SmoothScroll from "@/components/providers/SmoothScroll";
 import "./globals.css";
 
 const archivo = Archivo({
@@ -16,14 +17,19 @@ const carterOne = Carter_One({
   weight: "400",
 });
 
+const DESCRIPTION =
+  "Poulcook, le poulet braisé Fast Good : mariné et braisé lentement depuis 2021. Découvrez la carte et nos restaurants en France, en Algérie et au Maroc.";
+
 export const metadata: Metadata = {
-  title: "Poulcook — Le meilleur poulet braisé de Paname",
-  description:
-    "Poulcook, poulet braisé Fast Good à Paris depuis 2021. Commandez en ligne, découvrez nos accompagnements et devenez franchisé.",
+  metadataBase: new URL("https://poulcook.com"),
+  title: {
+    default: "Poulcook — Le meilleur poulet braisé de Paname",
+    template: "%s · Poulcook",
+  },
+  description: DESCRIPTION,
   openGraph: {
     title: "Poulcook — Le meilleur poulet braisé de Paname",
-    description:
-      "Poulcook, poulet braisé Fast Good à Paris depuis 2021. Commandez en ligne, découvrez nos accompagnements et devenez franchisé.",
+    description: DESCRIPTION,
     url: "https://poulcook.com",
     siteName: "Poulcook",
     locale: "fr_FR",
@@ -53,6 +59,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           the finish review, the verdict, DESIGN.md, and every shipping raster
           carrying its provenance.
         */}
+        <SmoothScroll />
+        <div aria-hidden className="grain" />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

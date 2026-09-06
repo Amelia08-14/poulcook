@@ -1,31 +1,42 @@
 @import "tailwindcss";
 
 /*
-  Poulcook — monde "produit vedette" (voir le commentaire de direction dans layout.tsx).
-  Fond clair et encre sombre extraits tel quels du site live (cf. PRODUCT.md, Brand
-  Commitments) ; corail/teal/or sont la charte existante, inchangée. La nuit n'est
-  jamais le fond par défaut — elle rythme certaines bandes (hero, preuve sociale,
-  franchise, footer) pour varier la densité du défilement.
+  Poulcook — monde "produit vedette", version 2026 : mêmes teintes de marque
+  (corail #E94F36, teal #00697F, or #DB9423 — verrouillées par le client, cf.
+  PRODUCT.md) mais rendu modernisé : dégradés braise, neutres réchauffés, verre
+  dépoli, grain de film, contrastes profonds. Aucune couleur étrangère à la
+  marque — uniquement des déclinaisons (tintes, nuances, dégradés).
 */
 :root {
-  --color-paper: #f2f2f2;
-  --color-paper-raised: #e8e7e2;
-  --color-paper-line: #d8d6cf;
+  /* Neutres réchauffés — papier "sable/crème" plutôt que blanc, nuit brun brûlé.
+     (Assombri + réchauffé sur retour client : l'accueil paraissait trop blanc.) */
+  --color-paper: #ece3d3;
+  --color-paper-raised: #e2d6c1;
+  --color-paper-line: #cfc0a4;
 
-  --color-ink: #1d1d23;
-  --color-ink-dim: #5c5a60;
+  --color-ink: #1b1a1f;
+  --color-ink-dim: #5b5860;
 
-  --color-night: #141318;
-  --color-night-raised: #201e25;
+  --color-night: #131015;
+  --color-night-raised: #201b22;
 
-  --color-cream: #f2eee6;
-  --color-cream-dim: #a7a49b;
+  --color-cream: #f5f1e8;
+  --color-cream-dim: #a8a298;
 
+  /* Charte de marque — inchangée */
   --color-teal: #00697f;
   --color-teal-strong: #1e93ac;
   --color-coral: #e94f36;
   --color-coral-strong: #ff7a5c;
   --color-gold: #db9423;
+
+  /* Dégradés signature (déclinaisons de la charte) */
+  --grad-ember: linear-gradient(135deg, #ff8f6b 0%, #e94f36 46%, #db9423 100%);
+  --grad-ember-soft: linear-gradient(135deg, rgba(255, 143, 107, 0.16), rgba(219, 148, 35, 0.14));
+  --grad-teal: linear-gradient(135deg, #29a3bd 0%, #00697f 100%);
+  --grad-night: linear-gradient(180deg, #201b22 0%, #131015 100%);
+
+  color-scheme: light;
 }
 
 @theme inline {
@@ -56,6 +67,10 @@ body {
   background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  /* Filet anti-débordement horizontal — `clip` ne casse pas `position: sticky`
+     (contrairement à `hidden`) et ne crée pas de conteneur de scroll. */
+  overflow-x: clip;
 }
 
 ::selection {
@@ -71,6 +86,10 @@ body {
 html {
   scrollbar-color: var(--color-paper-line) var(--color-paper);
   scrollbar-width: thin;
+  /* Débordement horizontal clippé au niveau racine (transforms de `.reveal-*`,
+     blobs/aurora en `inset` négatif…). `clip` ≠ `hidden` : ne casse pas
+     `position: sticky` et ne crée pas de conteneur de scroll. */
+  overflow-x: clip;
 }
 
 ::-webkit-scrollbar {
@@ -96,49 +115,146 @@ html {
   font-variant-numeric: tabular-nums;
 }
 
-/* Axe de largeur d'Archivo (variable font), poussé uniquement sur les très
-   grands titres — jamais une "police Expanded" statique séparée. */
 .font-wide {
   font-variation-settings: "wdth" 118;
 }
 
-/* Signature de mouvement du site : une entrée avec léger rebond au
-   défilement, déclinée en 5 directions pour que les blocs arrivent de
-   côtés différents plutôt que le même fondu répété partout. */
+/* ---------- Surfaces & habillage modernes ---------- */
+
+/* Verre dépoli — nav, cartes flottantes sur photo */
+.glass {
+  background: color-mix(in srgb, var(--color-paper) 72%, transparent);
+  backdrop-filter: blur(14px) saturate(1.4);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  border: 1px solid color-mix(in srgb, var(--color-ink) 8%, transparent);
+}
+
+.glass-dark {
+  background: color-mix(in srgb, var(--color-night) 55%, transparent);
+  backdrop-filter: blur(16px) saturate(1.3);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
+  border: 1px solid color-mix(in srgb, var(--color-cream) 12%, transparent);
+}
+
+/* Texte "braise" — dégradé de marque clippé sur la typo d'affichage.
+   Ré-appliqué aux descendants pour traverser les <span> mot-à-mot d'AnimeText
+   (background-clip:text ne perce pas les éléments enfants). */
+.text-ember,
+.text-ember * {
+  background-image: var(--grad-ember);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-teal-grad,
+.text-teal-grad * {
+  background-image: var(--grad-teal);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Aura de fond — mesh multi-radial, mêmes teintes que la charte, remplace
+   l'aplat de couleur plat. Décoratif, jamais de contenu dessus. */
+.aurora {
+  position: absolute;
+  inset: -20%;
+  pointer-events: none;
+  filter: blur(60px);
+  opacity: 0.55;
+  background:
+    radial-gradient(38% 44% at 22% 30%, color-mix(in srgb, var(--color-coral) 55%, transparent) 0%, transparent 70%),
+    radial-gradient(34% 40% at 80% 22%, color-mix(in srgb, var(--color-gold) 45%, transparent) 0%, transparent 72%),
+    radial-gradient(46% 50% at 62% 84%, color-mix(in srgb, var(--color-teal) 42%, transparent) 0%, transparent 74%);
+  animation: aurora-drift 26s ease-in-out infinite alternate;
+}
+
+@keyframes aurora-drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(-3%, 4%, 0) scale(1.12);
+  }
+}
+
+/* Grain de film — texture fixe très discrète sur toute la page, casse
+   l'aplat numérique. Statique (aucune animation), donc sûr partout. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Halo dégradé derrière un bouton principal au survol */
+.btn-glow {
+  position: relative;
+  isolation: isolate;
+}
+
+.btn-glow::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: var(--grad-ember);
+  opacity: 0;
+  z-index: -1;
+  filter: blur(14px);
+  transition: opacity 0.35s ease;
+}
+
+.btn-glow:hover::before {
+  opacity: 0.75;
+}
+
+/* Masque de dégradé pour les bandeaux défilants (fondu sur les bords) */
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+/* ---------- Révélation au scroll (CSS, sans dépendance RAF) ---------- */
 .reveal {
   opacity: 0;
   transition:
-    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: blur(6px);
 }
 
 .reveal-up {
-  transform: translateY(56px) scale(0.96);
+  transform: translateY(48px) scale(0.97);
 }
 
 .reveal-down {
-  transform: translateY(-48px) scale(0.96);
+  transform: translateY(-40px) scale(0.97);
 }
 
 .reveal-left {
-  transform: translate(-72px, 12px) rotate(-3deg);
+  transform: translate(-60px, 10px) rotate(-2deg);
 }
 
 .reveal-right {
-  transform: translate(72px, 12px) rotate(3deg);
+  transform: translate(60px, 10px) rotate(2deg);
 }
 
 .reveal-zoom {
-  transform: scale(0.82);
+  transform: scale(0.84);
 }
 
 .reveal-visible {
   opacity: 1;
+  filter: blur(0);
   transform: translate(0, 0) scale(1) rotate(0deg);
 }
 
-/* Les photos produit se posent par un léger recul de zoom, jamais un
-   fondu seul — la photographie fait partie du geste de révélation. */
 .photo-zoom img {
   transform: scale(1.12);
   transition: transform 1.6s cubic-bezier(0.16, 1, 0.3, 1);
@@ -147,6 +263,12 @@ html {
 .reveal-visible.photo-zoom img,
 .reveal-visible .photo-zoom img {
   transform: scale(1);
+}
+
+/* Texte animé mot à mot (AnimeText) — état de départ avant prise en charge JS */
+.anime-word {
+  display: inline-block;
+  will-change: transform, opacity;
 }
 
 @keyframes pulse-dot {
@@ -163,9 +285,7 @@ html {
   animation: pulse-dot 1.6s ease-in-out infinite;
 }
 
-/* Lueur de braise : dérive lentement derrière les bandes nuit pour éviter
-   l'aplat mort — littéral pour une marque de poulet "braisé", jamais un
-   glow décoratif générique. Un seul geste, réservé à 2-3 bandes par page. */
+/* Lueur de braise — dérive lente derrière les bandes nuit */
 @keyframes ember-drift {
   0%,
   100% {
@@ -193,10 +313,7 @@ html {
   background: radial-gradient(closest-side, var(--color-gold) 0%, transparent 72%);
 }
 
-/* Blobs organiques : forme molle qui respire et pivote lentement — le
-   registre de fond coloré/vivant demandé par le client, décliné dans la
-   charte Poulcook (corail/teal/or) plutôt que les orange/jaune génériques
-   des références. Un seul blob = un seul dégradé, jamais empilé. */
+/* Blobs organiques */
 @keyframes blob-morph {
   0%,
   100% {
@@ -218,8 +335,6 @@ html {
   animation: blob-morph 22s ease-in-out infinite;
 }
 
-/* Anneau qui tourne en continu — le geste "circulaire" littéral autour
-   d'un badge ponctuel, jamais un ornement répété partout. */
 @keyframes ring-spin {
   to {
     transform: rotate(360deg);
@@ -230,8 +345,6 @@ html {
   animation: ring-spin 18s linear infinite;
 }
 
-/* Badge flottant : légère lévitation, pour les preuves réelles (remise,
-   ancienneté) posées sur une photo plutôt qu'un fait noyé dans un paragraphe. */
 @keyframes badge-float {
   0%,
   100% {
@@ -246,8 +359,6 @@ html {
   animation: badge-float 4.5s ease-in-out infinite;
 }
 
-/* Le poulet du slogan flotte doucement une fois posé — présenté comme un
-   plat qu'on vient de servir, jamais un simple élément statique. */
 @keyframes plate-drift {
   0%,
   100% {
@@ -262,8 +373,6 @@ html {
   animation: plate-drift 6s ease-in-out infinite;
 }
 
-/* Bandeau défilant (noms des accompagnements) — un second registre de
-   mouvement, continu plutôt que déclenché au scroll, pour varier le rythme. */
 @keyframes marquee {
   from {
     transform: translateX(0);
@@ -281,9 +390,6 @@ html {
   animation-play-state: paused;
 }
 
-/* Flamme vivante — la braise littérale demandée par le client, reprise du
-   logo (le "V" de flamme) plutôt qu'une décoration inventée. Vacille,
-   jamais un simple pulse d'opacité. */
 @keyframes flame-flicker {
   0%,
   100% {
@@ -305,9 +411,6 @@ html {
   animation: flame-flicker 2.4s ease-in-out infinite;
 }
 
-/* Motif de logo en franchise — le rond de marque répété en fond très clair,
-   qui dérive lentement, comme le décor mural du vrai restaurant plutôt
-   qu'une texture générique. Réservé à 1 section, jamais partout. */
 @keyframes logo-pattern-drift {
   from {
     transform: translate(0, 0);
@@ -321,9 +424,41 @@ html {
   animation: logo-pattern-drift 40s linear infinite;
 }
 
+/* Filet lumineux qui balaie une carte au survol */
+@keyframes sheen {
+  from {
+    transform: translateX(-120%) skewX(-12deg);
+  }
+  to {
+    transform: translateX(220%) skewX(-12deg);
+  }
+}
+
+.sheen-hover {
+  position: relative;
+  overflow: hidden;
+}
+
+.sheen-hover::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(245, 241, 232, 0.35), transparent);
+  transform: translateX(-120%) skewX(-12deg);
+  pointer-events: none;
+}
+
+.sheen-hover:hover::after {
+  animation: sheen 0.9s ease;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal {
     opacity: 1;
+    filter: none;
     transform: none;
   }
 
@@ -331,19 +466,18 @@ html {
     transform: scale(1);
   }
 
-  .animate-marquee {
-    animation: none;
-  }
-
+  .animate-marquee,
   .flame-flicker,
-  .logo-pattern {
-    animation: none;
-  }
-
+  .logo-pattern,
+  .aurora,
   .blob,
   .ring-spin,
   .badge-float,
   .plate-drift {
+    animation: none;
+  }
+
+  .sheen-hover:hover::after {
     animation: none;
   }
 

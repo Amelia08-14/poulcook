@@ -5,7 +5,7 @@ import Reveal from "@/components/ui/Reveal";
 import { SITE } from "@/data/content";
 
 export const metadata: Metadata = {
-  title: "Mentions légales — Poulcook",
+  title: "Mentions légales",
 };
 
 export default function MentionsLegalesPage() {

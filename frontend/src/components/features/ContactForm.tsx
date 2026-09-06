@@ -38,7 +38,7 @@ export default function ContactForm() {
     <form onSubmit={handleSubmit} className="grid gap-6 sm:grid-cols-2">
       <div className="flex flex-col gap-2">
         <label className={labelClasses} htmlFor="name">
-          Name *
+          Nom *
         </label>
         <input id="name" name="name" required className={inputClasses} autoComplete="name" />
       </div>

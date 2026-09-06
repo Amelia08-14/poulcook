@@ -5,7 +5,7 @@ import Reveal from "@/components/ui/Reveal";
 import { HISTORY } from "@/data/content";
 
 export const metadata: Metadata = {
-  title: "Notre histoire — Poulcook",
+  title: "Notre histoire",
   description: "L'histoire de Poulcook, le poulet braisé le plus chaud de Paname depuis 2021.",
 };
 
@@ -45,8 +45,9 @@ export default function AboutPage() {
           </Reveal>
         </div>
 
-        <Reveal direction="zoom" delay={80} className="mt-16 rounded-2xl bg-paper-raised px-8 py-10 text-balance text-xl font-medium leading-snug text-ink sm:px-12 sm:py-12 sm:text-2xl">
-          {HISTORY.closing}
+        <Reveal direction="zoom" delay={80} className="relative isolate mt-16 overflow-hidden rounded-[1.75rem] bg-night px-8 py-12 text-balance text-xl font-medium leading-snug text-cream sm:px-12 sm:py-14 sm:text-2xl">
+          <span aria-hidden className="aurora opacity-30" />
+          <span className="relative">{HISTORY.closing}</span>
         </Reveal>
       </section>
     </>

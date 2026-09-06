@@ -2,13 +2,15 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import PageHeader from "@/components/layouts/PageHeader";
 import Reveal from "@/components/ui/Reveal";
+import Stagger from "@/components/ui/Stagger";
+import AnimeText from "@/components/ui/AnimeText";
 import EmberGlow from "@/components/ui/EmberGlow";
 import FranchiseStats from "@/components/features/FranchiseStats";
 import FranchiseForm from "@/components/features/FranchiseForm";
 import { FRANCHISE_PILLARS } from "@/data/content";
 
 export const metadata: Metadata = {
-  title: "Devenir franchisé — Poulcook",
+  title: "Devenir franchisé",
   description: "Rejoignez la franchise Poulcook, spécialiste du poulet braisé Fast Good à Paris.",
 };
 
@@ -46,30 +48,29 @@ export default function FranchisePage() {
 
       <section className="border-t border-paper-line py-20 sm:py-28">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-x-12 gap-y-14 sm:grid-cols-2">
+          <Stagger className="grid gap-x-12 gap-y-14 sm:grid-cols-2" step={90}>
             {FRANCHISE_PILLARS.map((pillar, index) => (
-              <Reveal
-                key={pillar.title}
-                direction={index % 2 === 0 ? "left" : "right"}
-                delay={Math.floor(index / 2) * 80}
-              >
-                <h2 className="text-xl font-bold tracking-tight text-ink">{pillar.title}</h2>
+              <div key={pillar.title}>
+                <span className="font-display text-2xl text-ember tabular-nums">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <h2 className="mt-2 text-xl font-bold tracking-tight text-ink">{pillar.title}</h2>
                 <p className="mt-3 text-base leading-relaxed text-ink-dim">{pillar.text}</p>
-              </Reveal>
+              </div>
             ))}
-          </div>
+          </Stagger>
         </div>
       </section>
 
       <section className="border-t border-paper-line bg-paper-raised py-20 sm:py-28">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <Reveal>
-            <h2 className="text-balance font-display text-3xl tracking-tight text-ink sm:text-4xl">
-              Envie de rejoindre l&apos;aventure Poulcook ?
-            </h2>
-            <p className="mt-4 text-lg text-ink-dim">
-              Remplissez le formulaire ci-dessous, notre équipe revient vers vous rapidement.
-            </p>
+          <AnimeText
+            as="h2"
+            text="Envie de rejoindre l'aventure Poulcook ?"
+            className="text-balance font-display text-3xl tracking-tight text-ink sm:text-4xl"
+          />
+          <Reveal as="p" delay={120} className="mt-4 text-lg text-ink-dim">
+            Remplissez le formulaire ci-dessous, notre équipe revient vers vous rapidement.
           </Reveal>
           <Reveal delay={100} className="mt-10">
             <FranchiseForm />

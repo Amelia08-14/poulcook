@@ -5,7 +5,7 @@ import Reveal from "@/components/ui/Reveal";
 import { SITE } from "@/data/content";
 
 export const metadata: Metadata = {
-  title: "Politique de confidentialité — Poulcook",
+  title: "Politique de confidentialité",
 };
 
 export default function PrivacyPolicyPage() {
